@@ -1,0 +1,11 @@
+{
+  "name": "package-tracker",
+  "version": "1.2.0",
+  "description": "Chrome/Brave extension that redirects tracking-number searches to the carrier's tracking page.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Package Tracker — Settings</title>
+    <style>
+      :root {
+        --bg: #0f1115;
+        --panel: #171a21;
+        --panel2: #1c2028;
+        --border: #262b36;
+        --text: #e7eaf0;
+        --muted: #8b93a3;
+        --accent: #4c8dff;
+        --ok: #38d39f;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 26px 24px 56px; }
+
+      header { display: flex; align-items: center; gap: 13px; margin-bottom: 6px; }
+      header img { width: 40px; height: 40px; }
+      header h1 { font-size: 21px; margin: 0; font-weight: 650; }
+      p.sub { color: var(--muted); margin: 2px 0 20px; }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        position: sticky;
+        top: 0;
+        padding: 12px 0;
+        background: linear-gradient(var(--bg) 78%, transparent);
+        z-index: 5;
+      }
+      .search {
+        flex: 1;
+        min-width: 200px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 13px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--panel);
+      }
+      .search:focus-within { border-color: var(--accent); }
+      .search svg { flex: none; opacity: 0.6; }
+      .search input {
+        flex: 1;
+        border: 0;
+        outline: none;
+        background: none;
+        color: var(--text);
+        font-size: 14px;
+      }
+      .links button {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 13px;
+        padding: 8px 12px;
+        border-radius: 9px;
+      }
+      .links button:hover { border-color: var(--accent); }
+      .saved { color: var(--ok); font-size: 13px; opacity: 0; transition: opacity 0.2s; }
+      .saved.show { opacity: 1; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 10px;
+      }
+      .card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+      }
+      .logo {
+        flex: none;
+        height: 36px;
+        padding: 5px 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 7px;
+        overflow: hidden;
+      }
+      .logo img { max-width: 84px; max-height: 26px; object-fit: contain; display: block; }
+      /* Monogram fallback fills the chip instead of sitting on white */
+      .logo:has(.mono) { background: none; border: 0; padding: 0; }
+      .mono {
+        width: 46px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        color: #fff;
+        border-radius: 7px;
+      }
+      .meta { flex: 1; min-width: 0; }
+      .meta .name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .meta .ex {
+        color: var(--muted);
+        font-size: 11.5px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .empty { color: var(--muted); padding: 24px 4px; }
+
+      /* Toggle */
+      .switch { position: relative; width: 40px; height: 23px; flex: none; }
+      .switch input { opacity: 0; width: 0; height: 0; }
+      .slider {
+        position: absolute; inset: 0; background: #39404d;
+        border-radius: 999px; transition: background 0.15s; cursor: pointer;
+      }
+      .slider::before {
+        content: ""; position: absolute; height: 17px; width: 17px;
+        left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform 0.15s;
+      }
+      .switch input:checked + .slider { background: var(--accent); }
+      .switch input:checked + .slider::before { transform: translateX(17px); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <img src="icon128.png" alt="Package Tracker" />
+        <h1>Package Tracker</h1>
+      </header>
+      <p class="sub">
+        Turn carriers on or off. Disabled carriers are never auto‑detected or
+        redirected — useful if a pattern ever collides with something you search.
+      </p>
+
+      <div class="toolbar">
+        <label class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input id="search" type="text" placeholder="Search carriers…" autocomplete="off" />
+        </label>
+        <div class="links">
+          <button id="enableAll" type="button">Enable all</button>
+          <button id="disableAll" type="button">Disable all</button>
+        </div>
+        <span class="saved" id="saved">Saved</span>
+      </div>
+
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>No carriers match your search.</div>
+    </div>
+    <script type="module" src="settings.js"></script>
+  </body>
+</html>

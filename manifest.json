@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Package Tracker",
+  "version": "1.2.0",
+  "description": "Detects tracking numbers in the address bar and redirects to the carrier's tracking page.",
+  "permissions": ["webNavigation", "storage"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "settings.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Package Tracker",
+    "default_icon": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
