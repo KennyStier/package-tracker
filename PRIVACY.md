@@ -33,4 +33,4 @@ The extension requests **no host permissions** and contains **no remote code**.
 ## Contact
 
 Questions: open an issue at
-https://github.com/KennyStier/package-tracker/issues
+https://github.com/MillhousenTech/package-tracker/issues
